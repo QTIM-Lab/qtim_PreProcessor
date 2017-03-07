@@ -8,7 +8,7 @@ input_files = ['/home/QTIM_PreProcess/Sample_Data/TCGA-02-0054']
 input_search_phrase = '*'
 input_exclusion_phrase = ''
 
-output_folder = ['/home/data/RAW_NIFTI']
+output_folder = 'home/QTIM_PreProcess/Sample_Data/RAW_NIFTI'
 output_suffix = ''
 
 method = 'freesurfer_mri_convert'
