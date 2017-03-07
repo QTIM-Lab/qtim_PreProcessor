@@ -9,7 +9,7 @@ from shutil import copyfile
 import glob
 import os
 
-def BRAINSFit_register(fixed_volume, output_filename, moving_volume, transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine', transform_mode = 'useMomentsAlign', interpolation_mode = 'Linear', sampling_percentage = .06):
+def BRAINSFit_register(moving_volume, output_filename, fixed_volume, transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine', transform_mode = 'useMomentsAlign', interpolation_mode = 'Linear', sampling_percentage = .06):
 
 	if fixed_volume == moving_volume:
 		print 'Cannot register a volume to itself! Copying over and skipping this volume...'
@@ -19,6 +19,8 @@ def BRAINSFit_register(fixed_volume, output_filename, moving_volume, transform_t
 	BRAINSFit_base_command = ['Slicer', '--launch', 'BRAINSFit', '--fixedVolume', '"' + fixed_volume + '"', '--transformType', transform_type, '--initializeTransformMode', transform_mode, '--interpolationMode', interpolation_mode, '--samplingPercentage', str(sampling_percentage)]
 
 	BRAINSFit_specific_command = BRAINSFit_base_command + ['--movingVolume',moving_volume,'--outputVolume',output_filename]
+
+	print ' '.join(BRAINSFit_specific_command)
 
 	try:
 		print 'Using 3DSlicer\'s BRAINSFit to register ' + moving_volume + ' to ' + fixed_volume + '...'
@@ -48,3 +50,8 @@ def run_test():
 
 if __name__ == "__main__":
 	run_test()
+
+FSLDIR=/usr/share/fsl/4.1
+. ${FSLDIR}/etc/fslconf/fsl.sh
+PATH=${FSLDIR}/bin:${PATH}
+export FSLDIR PATH

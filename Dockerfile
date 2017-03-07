@@ -25,20 +25,18 @@ RUN ln -snf /bin/bash /bin/sh
 ENV FREESURFER_HOME /usr/local/freesurfer 
 RUN source $FREESURFER_HOME/SetUpFreeSurfer.sh
 
-# Install required python packages.
-RUN sudo DEBIAN_FRONTEND=noninteractive apt-get  -y --force-yes install python-pip python2.7-dev
-RUN pip install qtim_tools nibabel pydicom
-
 # Install ANTS
 WORKDIR /home
 RUN wget "https://github.com/stnava/ANTs/releases/download/v2.1.0/Linux_Debian_jessie_x64.tar.bz2"
 RUN tar -C /usr/local -xjf Linux_Debian_jessie_x64.tar.bz2
 
+# Install required python packages.
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get  -y --force-yes install python-pip python2.7-dev
+RUN pip install qtim_tools nibabel pydicom
+
 # Pull git repository with relevant python scripts.
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/PreProcessing_Library
 
+# Cleanup
 
-
-
-
-
+# Set environment at startup.

@@ -1,10 +1,10 @@
 from subprocess import call
 
-def skull_strip_fsl(bet_volume, output_filename, skull_strip_threshold=.5, skull_strip_vertical_gradient=0,):
+def skull_strip_fsl(bet_volume, output_filename, skull_strip_threshold=.5, skull_strip_vertical_gradient=0):
 	
 	# Note - include head radius and center options in the future.
 
-	bet_base_command = ['bet2', '-f', str(skull_strip_threshold), '-g', str(skull_strip_vertical_gradient)]
+	bet_base_command = ['bet2', '-f', str(skull_strip_threshold), '-g', str(skull_strip_vertical_gradient), '-m']
 
 	bet_specific_command = bet_base_command + [bet_volume, output_filename]
 
@@ -16,12 +16,12 @@ def skull_strip_fsl(bet_volume, output_filename, skull_strip_threshold=.5, skull
 
 	return
 
-def execute(input_volume, specific_function, params):
+def execute(input_volume, output_filename, specific_function, params):
 
-	if 'specific_function' == 'bet2':
-		skull_strip_fsl(params)
+	if specific_function == 'fsl_skull_stripping':
+		skull_strip_fsl(*[input_volume, output_filename] + params)
 	else:
-		print 'There is no skull-stripping method associated with this keyword: ' + specific_function + '. Skipping this volume..'
+		print 'There is no skull-stripping method associated with this keyword: ' + specific_function + '. Skipping volume located at...' + input_volume
 
 def run_test():
 	return

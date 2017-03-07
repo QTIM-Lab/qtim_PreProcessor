@@ -19,7 +19,8 @@ preprocessing_dictionary = {
     'resample': resample,
     'bias_correct': bias_correction,
     'crop': crop,
-    'register': registration
+    'register': registration,
+    'skull_strip': skull_strip
 }
 
 def grab_files(location_list, file_regex='*', exclusion_regex=''):
