@@ -5,9 +5,9 @@ from subprocess import call
 
 def resample_slicer(resample_volume, output_filename, dimensions=[1,1,1], interpolation_mode = 'linear'):
 
-	ResampleVolume_base_command = ['Slicer', '--launch', 'ResampleScalarVectorDWIVolume', '-i', interpolation_mode]
+	ResampleVolume_base_command = ['Slicer', '--launch', 'ResampleScalarVolume', '-i', interpolation_mode]
 
-	ResampleVolume_base_command += ['-z', str(dimensions).strip('[]').replace(' ', '')]
+	ResampleVolume_base_command += ['-s', str(dimensions).strip('[]').replace(' ', '')]
 
 	ResampleVolume_specific_command = ResampleVolume_base_command + [resample_volume, output_filename]
 	

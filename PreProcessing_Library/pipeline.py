@@ -4,6 +4,7 @@ import os
 import glob
 import re
 import fnmatch
+import shutil
 
 import normalize
 import import_dicom
@@ -16,6 +17,7 @@ import registration
 preprocessing_dictionary = {
     'dicom_convert': import_dicom,
     'resample': resample,
+    'bias_correct': bias_correction,
     'crop': crop 
 }
 
@@ -84,6 +86,15 @@ def grab_output_filepath_folder(input_volume, output_folder, output_suffix = '',
     output_filename = os.path.join(output_folder, no_path + output_suffix + '.nii.gz')
 
     return output_filename
+
+def clear_directories(input_directories):
+
+    if isinstance(input_directories, basestring):
+        input_directories = [input_directories]
+
+    for directory in input_directories:
+        shutil.rmtree(directory)
+
 
 def execute(preprocess_step, input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, params):
 

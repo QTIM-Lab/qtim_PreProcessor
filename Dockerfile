@@ -33,14 +33,9 @@ RUN pip install qtim_tools nibabel pydicom
 WORKDIR /home
 RUN wget "https://github.com/stnava/ANTs/releases/download/v2.1.0/Linux_Debian_jessie_x64.tar.bz2"
 RUN tar -C /usr/local -xjf Linux_Debian_jessie_x64.tar.bz2
-# curl -v -s -L $ANTS_URL | tar xz -C /tmp && \
- #    mv /tmp/ANTS* /opt/ANTS
 
 # Pull git repository with relevant python scripts.
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/PreProcessing_Library
-
-
-# Install fsl from python package.
 
 
 
