@@ -4,13 +4,14 @@ def skull_strip_fsl(bet_volume, output_filename, skull_strip_threshold=.5, skull
 	
 	# Note - include head radius and center options in the future.
 
-	bet_base_command = ['bet2', '-f', str(skull_strip_threshold), '-g', str(skull_strip_vertical_gradient), '-m']
+	bet_base_command = ['bet2', bet_volume, output_filename, '-f', str(skull_strip_threshold), '-g', str(skull_strip_vertical_gradient), '-m']
 
-	bet_specific_command = bet_base_command + [bet_volume, output_filename]
+	bet_specific_command = bet_base_command
 
 	try:
+                print '\n'
 		print 'Using FSL\'s BET2 (Brain Extraction Tool) to skull-strip ' + bet_volume + ' to output volume ' + output_filename + '...'
-		call(' '.join(bet_specific_command), shell=True)
+                call(' '.join(bet_specific_command), shell=True)
 	except:
 		print 'BET2 skull-stripping failed for file ' + resample_volume
 

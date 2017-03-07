@@ -70,7 +70,6 @@ def grab_output_filepath(input_volume, output_folder, output_suffix = '', make_d
 
     no_path = os.path.basename(os.path.normpath(input_volume))
     file_prefix = str.split(no_path, '.nii')
-    print file_prefix
 
     output_filename = os.path.join(output_folder, file_prefix[0] + output_suffix + '.nii' + file_prefix[-1])
 

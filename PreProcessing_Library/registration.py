@@ -23,6 +23,7 @@ def BRAINSFit_register(moving_volume, output_filename, fixed_volume, transform_t
 	print ' '.join(BRAINSFit_specific_command)
 
 	try:
+                print '\n'
 		print 'Using 3DSlicer\'s BRAINSFit to register ' + moving_volume + ' to ' + fixed_volume + '...'
 		call(' '.join(BRAINSFit_specific_command), shell=True)
 	except:
@@ -50,8 +51,3 @@ def run_test():
 
 if __name__ == "__main__":
 	run_test()
-
-FSLDIR=/usr/share/fsl/4.1
-. ${FSLDIR}/etc/fslconf/fsl.sh
-PATH=${FSLDIR}/bin:${PATH}
-export FSLDIR PATH
