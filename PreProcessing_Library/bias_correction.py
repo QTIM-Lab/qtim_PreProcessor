@@ -1,6 +1,6 @@
 from subprocess import call
 
-def N4_Bias_Correct(n4bias_volume, skull_strip_threshold=.5, skull_strip_vertical_gradient=0, output_file=''):
+def N4_Bias_Correct(n4bias_volume, output_filename):
 	
 	# Note - include head radius and center options in the future.
 
@@ -17,9 +17,9 @@ def N4_Bias_Correct(n4bias_volume, skull_strip_threshold=.5, skull_strip_vertica
 
 	return
 
-def execute(input_volume, specific_function, params):
+def execute(input_volume, output_filename, specific_function, params):
 
-	if 'specific_function' == 'ants_n4_bias':
+	if specific_function == 'ants_n4_bias':
 		N4_Bias_Correct(*[input_volume, output_filename] + params)
 	else:
 		print 'There is no bias correction program associated with this keyword: '  + specific_function +  '. Skipping volume located at...' + input_volume

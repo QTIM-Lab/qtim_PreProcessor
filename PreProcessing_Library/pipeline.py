@@ -18,7 +18,8 @@ preprocessing_dictionary = {
     'dicom_convert': import_dicom,
     'resample': resample,
     'bias_correct': bias_correction,
-    'crop': crop 
+    'crop': crop,
+    'register': registration
 }
 
 def grab_files(location_list, file_regex='*', exclusion_regex=''):
@@ -93,7 +94,8 @@ def clear_directories(input_directories):
         input_directories = [input_directories]
 
     for directory in input_directories:
-        shutil.rmtree(directory)
+        if os.path.isdir(directory):
+            shutil.rmtree(directory)
 
 
 def execute(preprocess_step, input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, params):
