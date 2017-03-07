@@ -8,7 +8,7 @@ from subprocess import call
 import glob
 import os
 
-def BRAINSFit_register(fixed_volume, moving_volume,  Slicer_Path, output_filename,transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine', transform_mode = 'useMomentsAlign', interpolation_mode = 'Linear', sampling_percentage = .06):
+def BRAINSFit_register(fixed_volume, moving_volume, Slicer_Path, output_filename, transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine', transform_mode = 'useMomentsAlign', interpolation_mode = 'Linear', sampling_percentage = .06):
 
 	if fixed_volume == moving_volume:
 		print 'Cannot register a volume to itself! Skipping this volume...'
@@ -18,11 +18,11 @@ def BRAINSFit_register(fixed_volume, moving_volume,  Slicer_Path, output_filenam
 
 	BRAINSFit_specific_command = BRAINSFit_base_command + ['--movingVolume','"' + moving_volume + '"','--outputVolume','"' + output_filename + '"']
 
-		try:
-			print 'Using 3DSlicer\'s BRAINSFit to register ' + moving_volume + ' to ' + fixed_volume + '...'
-			call(' '.join(BRAINSFit_specific_command), shell=True)
-		except:
-			pass
+	try:
+		print 'Using 3DSlicer\'s BRAINSFit to register ' + moving_volume + ' to ' + fixed_volume + '...'
+		call(' '.join(BRAINSFit_specific_command), shell=True)
+	except:
+		print 'BRAINSFit failed for file ' + moving_volume
 
 	return
 

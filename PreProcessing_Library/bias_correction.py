@@ -1,4 +1,4 @@
-from suprocess import call
+from subprocess import call
 
 def N4_Bias_Correct(n4bias_volume, skull_strip_threshold=.5, skull_strip_vertical_gradient=0, output_file=''):
 	
