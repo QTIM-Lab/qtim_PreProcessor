@@ -15,6 +15,7 @@ import registration
 
 preprocessing_dictionary = {
     'dicom_convert': import_dicom,
+    'resample': resample,
     'crop': crop 
 }
 
@@ -26,7 +27,7 @@ def grab_files(location_list, file_regex='*', exclusion_regex=''):
     output_volumes = []
     for input_volume_item in location_list:
         if os.path.isdir(input_volume_item):
-            output_volumes += glob.glob(os.path.join(input_volume_item + file_regex))
+            output_volumes += glob.glob(os.path.join(input_volume_item, file_regex))
         else:
             output_volumes += [input_volume_item]
 
