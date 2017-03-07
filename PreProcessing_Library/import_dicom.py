@@ -6,7 +6,7 @@ from subprocess import call
 def mri_convert(dicom_folder, output_filename):
 
 	if os.path.isdir(dicom_folder):
-		dicom_volume = os.listdir(dicom_folder)[0]
+		dicom_volume = os.path.join(dicom_folder, os.listdir(dicom_folder)[0])
 
 	mri_convert_base_command = ['mri_convert']
 
