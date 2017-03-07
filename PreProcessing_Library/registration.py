@@ -9,7 +9,16 @@ from shutil import copyfile
 import glob
 import os
 
-def BRAINSFit_register(moving_volume, output_filename, fixed_volume, transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine', transform_mode = 'useMomentsAlign', interpolation_mode = 'Linear', sampling_percentage = .06):
+def BRAINSFit_register(moving_volume, output_filename, fixed_volume, fixed_volume_search_phrase, transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine', transform_mode = 'useMomentsAlign', interpolation_mode = 'Linear', sampling_percentage = .06):
+
+	if fixed_volume == '' and fixed_volume_search_phrase != '':
+		fixed_volume_results = glob.glob(os.path.join(os.path.dirname(moving_volume), fixed_volume_search_phrase))
+		if len(fixed_volume_results) == 1:
+			fixed_volume = fixed_volume_results[0]
+		else:
+			print 'Error! Search phrase for fixed registration volume returned multiple results. Cancelling registration, results printed below...'
+			print fixed_volume_results
+			return
 
 	if fixed_volume == moving_volume:
 		print 'Cannot register a volume to itself! Copying over and skipping this volume...'

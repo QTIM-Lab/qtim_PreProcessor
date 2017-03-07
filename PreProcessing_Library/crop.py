@@ -3,7 +3,16 @@ import glob
 
 from subprocess import call
 
-def crop_with_label(crop_volume, label_volume, output_filename, background_value=0):
+def crop_with_label(crop_volume, output_filename, label_volume, background_value=0):
+
+	if label_volume == '' and label_volume_search_phrase != '':
+		label_volume_results = glob.glob(os.path.join(os.path.dirname(crop_volume), label_volume_search_phrase))
+		if len(label_volume_results) == 1:
+			label_volume = label_volume_results[0]
+		else:
+			print 'Error! Search phrase for skullstripping mask returned multiple results. Cancelling registration, results printed below...'
+			print label_volume_results
+			return
 
 	label_data = nifti_util.nifti_2_numpy(label_volume)
 
@@ -21,10 +30,10 @@ def crop_with_label(crop_volume, label_volume, output_filename, background_value
 
 def execute(input_volume, specific_function, params):
 
-	if 'specific_function' == 'crop_python':
-		crop_with_label(params)
+	if specific_function == 'python_crop':
+		crop_with_label(*[input_volume, output_filename] + params)
 	else:
-		print 'There is no cropping method associated with this keyword: ' + specific_function + '. Skipping this volume..'
+		print 'There is no cropping method associated with this keyword: ' + specific_function + '. Skipping volume located at...' + input_volume
 
 def run_test():
 	return

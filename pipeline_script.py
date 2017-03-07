@@ -62,26 +62,27 @@ import PreProcessing_Library.pipeline as pipeline
 #--------------------------------------------------------------------#
 
 #--------------------------------------------------------------------#
-# # Registration Step
-# # Available methods: 'slicer_registration'
+# Registration Step
+# Available methods: 'slicer_registration'
 
-# input_files = ['./Sample_Data/ISOTROPIC_NIFTI']
-# input_search_phrase = '*.nii*'
-# input_exclusion_phrase = ''
+input_files = ['./Sample_Data/ISOTROPIC_NIFTI']
+input_search_phrase = '*.nii*'
+input_exclusion_phrase = ''
 
-# output_folder = './Sample_Data/REGISTERED_NIFTI'
-# output_suffix = '_r_27'
+output_folder = './Sample_Data/REGISTERED_NIFTI'
+output_suffix = '_r_27'
 
-# method = 'slicer_registration'
+method = 'slicer_registration'
 
-# fixed_volume = './Sample_Data/ISOTROPIC_NIFTI/1.3.6.1.4.1.14519.5.2.1.1706.4001.276414996547218243402040733611_nobias_isotropic.nii.gz'
-# transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine'
-# transform_mode = 'useMomentsAlign'
-# interpolation_mode = 'Linear'
-# sampling_percentage = .06
-# extra_parameters = [fixed_volume, transform_type, transform_mode, interpolation_mode, sampling_percentage]
+fixed_volume = ''
+fixed_volume_search_phrase = '*2764*'
+transform_type='Rigid,ScaleVersor3D,ScaleSkewVersor3D,Affine'
+transform_mode = 'useMomentsAlign'
+interpolation_mode = 'Linear'
+sampling_percentage = .06
+extra_parameters = [fixed_volume, transform_type, transform_mode, interpolation_mode, sampling_percentage]
 
-# pipeline.execute('register', input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, extra_parameters)
+pipeline.execute('register', input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, extra_parameters)
 
 #--------------------------------------------------------------------#
 
@@ -98,8 +99,30 @@ output_suffix = '_skullstripped'
 
 method = 'fsl_skull_stripping'
 
+output_mask_suffix = '_mask'
 skull_strip_threshold=.5
 skull_strip_vertical_gradient=0
+extra_parameters = [skull_strip_threshold, skull_strip_vertical_gradient]
+
+pipeline.execute('skull_strip', input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, extra_parameters)
+
+#--------------------------------------------------------------------#
+
+#--------------------------------------------------------------------#
+# Cropping Step
+# Available methods: 'python_crop'
+
+input_files = ['./Sample_Data/REGISTERED_NIFTI']
+input_search_phrase = '*2764*.nii*'
+input_exclusion_phrase = ''
+
+output_folder = './Sample_Data/SKULLSTRIP_NIFTI'
+output_suffix = '_skullstripped'
+
+method = 'python_crop'
+
+label_volume = ''
+label_volume_search_phrase = '*2764*mask*.nii*'
 extra_parameters = [skull_strip_threshold, skull_strip_vertical_gradient]
 
 pipeline.execute('skull_strip', input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, extra_parameters)

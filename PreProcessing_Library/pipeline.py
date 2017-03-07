@@ -114,8 +114,6 @@ def execute(preprocess_step, input_files, input_search_phrase, input_exclusion_p
 
         preprocessing_dictionary[preprocess_step].execute(single_volume, output_filename, method, params)
 
-
-
     return
 
 def run_test():
