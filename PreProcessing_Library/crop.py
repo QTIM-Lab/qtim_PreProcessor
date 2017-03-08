@@ -28,7 +28,7 @@ def crop_with_label(crop_volume, output_filename, label_volume, label_volume_sea
 
 	return
 
-def execute(input_volume, specific_function, params):
+def execute(input_volume, output_filename, specific_function, params):
 
 	if specific_function == 'python_crop':
 		crop_with_label(*[input_volume, output_filename] + params)

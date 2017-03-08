@@ -38,7 +38,7 @@ def normalize_zeromean_unitvariance(normalize_volume, output_filename, label_vol
 
 	return
 
-def execute(input_volume, specific_function, params):
+def execute(input_volume, output_filename, specific_function, params):
 
 	if specific_function == 'zeromean_normalize':
 		normalize_zeromean_unitvariance(*[input_volume, output_filename] + params)
