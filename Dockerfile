@@ -21,22 +21,32 @@ RUN SLICER_URL="http://download.slicer.org/bitstream/461634" && \
 RUN bash
 RUN wget ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
 RUN tar -C /usr/local -xzvf freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
-RUN ln -snf /bin/bash /bin/sh
-ENV FREESURFER_HOME /usr/local/freesurfer 
-RUN source $FREESURFER_HOME/SetUpFreeSurfer.sh
+RUN rm freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
 
 # Install ANTS
 WORKDIR /home
 RUN wget "https://github.com/stnava/ANTs/releases/download/v2.1.0/Linux_Debian_jessie_x64.tar.bz2"
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes bzip2
 RUN tar -C /usr/local -xjf Linux_Debian_jessie_x64.tar.bz2
+RUN rm Linux_Debian_jessie_x64.tar.bz2
 
 # Install required python packages.
-RUN sudo DEBIAN_FRONTEND=noninteractive apt-get  -y --force-yes install python-pip python2.7-dev
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-pip python2.7-dev
 RUN pip install qtim_tools nibabel pydicom
 
 # Pull git repository with relevant python scripts.
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/PreProcessing_Library
 
-# Cleanup
+# Environmental Variables
+ENV FSLDIR /usr/share/fsl/5.0
+ENV FREESURFER_HOME /usr/local/freesurfer 
+ENV PATH "$PATH:/opt/slicer"
+ENV PATH "$PATH:${FSLDIR}/bin"
+ENV PATH "$PATH:/usr/local/debian_jessie"
 
-# Set environment at startup.
+# Startup Scripts
+RUN echo "source $FREESURFER_HOME/SetUpFreeSurfer.sh" >> ~/.bashrc
+RUN echo "source ${FSLDIR}/etc/fslconf/fsl.sh" >> ~/.bashrc
+
+# Commands at startup.
+ENTRYPOINT /bin/bash

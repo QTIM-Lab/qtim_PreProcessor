@@ -1,8 +1,9 @@
 import os
 import glob
+import common
 
 from subprocess import call
-from qtim_tools.qtim_utilities import nifti_util
+
 
 def crop_with_label(crop_volume, output_filename, label_volume, label_volume_dir, label_volume_search_phrase, background_value=0):
 
@@ -18,15 +19,15 @@ def crop_with_label(crop_volume, output_filename, label_volume, label_volume_dir
 			print label_volume_results
 			return
 
-	label_data = nifti_util.nifti_2_numpy(label_volume)
+	label_data = common.nifti_2_numpy(label_volume)
 
 	try:
                 print '\n'
 		print 'Using python\'s nibabel package to crop out background voxels on ' + crop_volume + ' using background values from the label at ' + label_volume + '...'
 		
-		crop_data = nifti_util.nifti_2_numpy(crop_volume)
+		crop_data = common.nifti_2_numpy(crop_volume)
 		crop_data[label_data == 0] = 0
-		nifti_util.save_numpy_2_nifti(crop_data, crop_volume, output_filename)
+		common.save_numpy_2_nifti(crop_data, crop_volume, output_filename)
 
 	except:
 		print 'Cropping with Python failed for file ' + crop_volume

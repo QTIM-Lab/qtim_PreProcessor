@@ -1,41 +1,27 @@
 
 import glob
 import os
+import nibabel as nib
+import numpy as np
 
-def grab_files(location_list, file_regex='*', exclusion_regex=''):
+def nifti_2_numpy(filepath):
 
+    """ This and the function below are taken from nifti_util. Docker is having trouble installing matplotlib, which is
+        imported in nifti_util, unfortunately.
+    """
 
-	if isinstance(location_list, basestring):
-		location_list = [location_list]
-	
-	output_volumes = []
-	for input_volume_item in location_list:
-		if os.path.isdir(input_volume_item):
-			output_volumes += glob.glob(os.path.join(input_volume_item + file_regex))
-		else:
-			output_volumes += [input_volume_item]
+    img = nib.load(filepath).get_data().astype(float)
+    return img
 
-	if exclusion_regex != '':
-		output_volumes = [filepath for filepath in output_volumes if exclusion_regex not in os.path.basename(os.path.normpath(resample_volume))]
+def save_numpy_2_nifti(image_numpy, reference_nifti_filepath, output_path):
 
-	return output_volumes
-
-def grab_output_filepath(input_volume, output_folder, output_suffix = '', make_dir = True):
-	
-	if output_folder == '':
-		output_folder = os.path.dirname(input_volumes)
-	elif not os.path.exists(output_folder) and make_dir
-		os.makedirs(output_folder)
-
-	no_path = os.path.basename(os.path.normpath(n4bias_volume))
-	file_prefix = str.split(no_path[-1], '.')[0]
-
-	output_filename = os.path.join(output_folder, file_prefix + output_suffix + '.' + '.'.join(file_prefix[1:-1]))
-
-	return output_filename
+    nifti_image = nib.load(reference_nifti_filepath)
+    image_affine = nifti_image.affine
+    output_nifti = nib.Nifti1Image(image_numpy, image_affine)
+    nib.save(output_nifti, output_path)
 
 def run_test():
-	return
+    return
 
 if __name__ == '__main__':
-	run_test()
+    run_test()

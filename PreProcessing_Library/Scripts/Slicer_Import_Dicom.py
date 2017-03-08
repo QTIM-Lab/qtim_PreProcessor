@@ -1,6 +1,5 @@
 import os
 import glob
-# import slicer
 
 from optparse import OptionParser
 
