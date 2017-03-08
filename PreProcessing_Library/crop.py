@@ -10,7 +10,7 @@ def crop_with_label(crop_volume, output_filename, label_volume, label_volume_sea
 		if len(label_volume_results) == 1:
 			label_volume = label_volume_results[0]
 		else:
-			print 'Error! Search phrase for skullstripping mask returned multiple results. Cancelling registration, results printed below...'
+			print 'Error! Search phrase for cropping mask returned multiple results. Cancelling registration, results printed below...'
 			print label_volume_results
 			return
 

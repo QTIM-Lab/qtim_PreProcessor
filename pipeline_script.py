@@ -91,7 +91,7 @@ pipeline.execute('register', input_files, input_search_phrase, input_exclusion_p
 # Available methods: 'fsl_skull_stripping'
 
 input_files = ['./Sample_Data/REGISTERED_NIFTI']
-input_search_phrase = '*T2*.nii*'
+input_search_phrase = '*AXT2*.nii*'
 input_exclusion_phrase = ''
 
 output_folder = './Sample_Data/SKULLSTRIP_NIFTI'
