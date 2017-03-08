@@ -20,7 +20,8 @@ preprocessing_dictionary = {
     'bias_correct': bias_correction,
     'crop': crop,
     'register': registration,
-    'skull_strip': skull_strip
+    'skull_strip': skull_strip,
+    'normalize': normalize
 }
 
 def grab_files(location_list, file_regex='*', exclusion_regex=''):
@@ -78,7 +79,7 @@ def grab_output_filepath(input_volume, output_folder, output_suffix = '', make_d
 def grab_output_filepath_folder(input_volume, output_folder, output_suffix = '', make_dir = True):
     
     if output_folder == '':
-        output_folder = os.path.dirname(input_volumes)
+        output_folder = os.path.dirname(input_volume)
     elif not os.path.exists(output_folder) and make_dir:
         os.makedirs(output_folder)
 
@@ -96,6 +97,16 @@ def clear_directories(input_directories):
     for directory in input_directories:
         if os.path.isdir(directory):
             shutil.rmtree(directory)
+
+def move_files_recursive(input_filepaths, file_regex='*', exclusion_regex='', output_folder='', output_suffix='', make_dir = True):
+
+    file_list = grab_files(input_filepaths, file_regex, exclusion_regex)
+
+    for move_file in file_list:
+        
+        output_filepath = grab_output_filepath(move_file, output_folder, output_suffix, make_dir)
+
+        os.rename(move_file, output_filepath)
 
 
 def execute(preprocess_step, input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, params):

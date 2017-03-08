@@ -3,7 +3,7 @@ import glob
 
 from subprocess import call
 
-def crop_with_label(crop_volume, output_filename, label_volume, background_value=0):
+def crop_with_label(crop_volume, output_filename, label_volume, label_volume_search_phrase, background_value=0):
 
 	if label_volume == '' and label_volume_search_phrase != '':
 		label_volume_results = glob.glob(os.path.join(os.path.dirname(crop_volume), label_volume_search_phrase))
