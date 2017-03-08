@@ -31,12 +31,9 @@ def slicer_convert(dicom_folder, output_filename):
     dicom_script_filepath = os.path.normpath(inspect.getfile(Scripts.Slicer_Import_Dicom)).replace('\\','/')
     if '.pyc' in dicom_script_filepath:
         dicom_script_filepath = dicom_script_filepath[0:-1]
-    print dicom_script_filepath
 
     DICOM_import_base_command = ['Slicer', '--no-main-window', '--disable-cli-modules', '--python-script', dicom_script_filepath]
     DICOM_import_specific_command = DICOM_import_base_command + ['-i',os.path.abspath(os.path.normpath(dicom_folder)),'-o',os.path.abspath(os.path.normpath(output_filename))]
-
-    print ' '.join(DICOM_import_specific_command)
 
     try:
         print '\n'

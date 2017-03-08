@@ -19,7 +19,7 @@ def skull_strip_fsl(bet_volume, output_filename, output_mask_suffix='_mask', sku
         os.rename(output_filename + '_mask.nii.gz', output_filename + file_prefix[0] + output_mask_suffix + '.nii.gz')
 
     except:
-        print 'BET2 skull-stripping failed for file ' + resample_volume
+        print 'BET2 skull-stripping failed for file ' + bet_volume
 
     return
 
