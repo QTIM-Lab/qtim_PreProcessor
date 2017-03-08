@@ -37,7 +37,7 @@ def grab_files(location_list, file_regex='*', exclusion_regex=''):
             output_volumes += [input_volume_item]
 
     if exclusion_regex != '':
-        output_volumes = [filepath for filepath in output_volumes if exclusion_regex not in os.path.basename(os.path.normpath(resample_volume))]
+        output_volumes = [filepath for filepath in output_volumes if exclusion_regex not in os.path.basename(os.path.normpath(filepath))]
 
     return output_volumes
 

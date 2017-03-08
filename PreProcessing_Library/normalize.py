@@ -9,15 +9,16 @@ import nibabel as nib
 def normalize_zeromean_unitvariance(normalize_volume, output_filename, label_volume='', label_volume_search_phrase=''):
 
 	if label_volume == '' and label_volume_search_phrase != '':
-		label_volume_results = glob.glob(os.path.join(os.path.dirname(crop_volume), label_volume_search_phrase))
+		label_volume_results = glob.glob(os.path.join(os.path.dirname(normalize_volume), label_volume_search_phrase))
 		if len(label_volume_results) == 1:
 			label_volume = label_volume_results[0]
 		else:
-			print 'Error! Search phrase for skullstripping mask returned multiple results. Cancelling registration, results printed below...'
+			print 'Error! Search phrase for normalization mask returned multiple results. Cancelling normalization, results printed below...'
 			print label_volume_results
 			return
 
 	try:
+                print '\n'
 		print 'Using python\'s Nibabel and Numpy packages to normalize intensities within a region of interest to zero mean and unit variance on volume ' + normalize_volume + ' to output volume ' + output_filename + '...'
 
 		normalize_numpy = nifti_util.nifti_2_numpy(normalize_volume)
@@ -26,7 +27,7 @@ def normalize_zeromean_unitvariance(normalize_volume, output_filename, label_vol
 			vol_mean = np.mean(normalize_numpy)
 			vol_std = np.std(normalize_numpy)			
 		else:
-			ROI_nifti = nifti_util.nifti_2_numpy(label_volume)
+			ROI_numpy = nifti_util.nifti_2_numpy(label_volume)
 			vol_mean = np.mean(normalize_numpy[ROI_numpy > 0])
 			vol_std = np.std(normalize_numpy[ROI_numpy > 0])
 

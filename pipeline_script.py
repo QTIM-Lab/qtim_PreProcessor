@@ -61,6 +61,8 @@ import PreProcessing_Library.pipeline as pipeline
 
 #--------------------------------------------------------------------#
 
+pipeline.clear_directories(['./Sample_Data/REGISTERED_NIFTI' ])
+
 #--------------------------------------------------------------------#
 # Registration Step
 # Available methods: 'slicer_registration'
@@ -112,19 +114,20 @@ pipeline.execute('skull_strip', input_files, input_search_phrase, input_exclusio
 # Cropping Step
 # Available methods: 'python_crop'
 
-input_files = ['./Sample_Data/SKULLSTRIP_NIFTI']
-input_search_phrase = '*_skullstripped.nii*'
-input_exclusion_phrase = ''
+input_files = ['./Sample_Data/REGISTERED_NIFTI']
+input_search_phrase = '*.nii*'
+input_exclusion_phrase = 'skullstrip'
 
 output_folder = './Sample_Data/SKULLSTRIP_NIFTI'
-output_suffix = ''
+output_suffix = '_skullstripped'
 
 method = 'python_crop'
 
 label_volume = ''
+label_volume_dir = './Sample_Data/SKULLSTRIP_NIFTI'
 label_volume_search_phrase = '*_mask.nii*'
 background_value = 0
-extra_parameters = [label_volume, label_volume_search_phrase, background_value]
+extra_parameters = [label_volume, label_volume_dir, label_volume_search_phrase, background_value]
 
 pipeline.execute('crop', input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, extra_parameters)
 

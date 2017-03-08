@@ -2,21 +2,26 @@ import os
 import glob
 
 from subprocess import call
+from qtim_tools.qtim_utilities import nifti_util
 
-def crop_with_label(crop_volume, output_filename, label_volume, label_volume_search_phrase, background_value=0):
+def crop_with_label(crop_volume, output_filename, label_volume, label_volume_dir, label_volume_search_phrase, background_value=0):
+
+        if label_volume_dir == '':
+            label_volume_dir = os.path.dirname(crop_volume)
 
 	if label_volume == '' and label_volume_search_phrase != '':
-		label_volume_results = glob.glob(os.path.join(os.path.dirname(crop_volume), label_volume_search_phrase))
+		label_volume_results = glob.glob(os.path.join(label_volume_dir, label_volume_search_phrase))
 		if len(label_volume_results) == 1:
 			label_volume = label_volume_results[0]
 		else:
-			print 'Error! Search phrase for cropping mask returned multiple results. Cancelling cropping, results printed below...'
+			print 'Error! Search phrase for cropping mask returned multiple or no results. Cancelling cropping, results printed below...'
 			print label_volume_results
 			return
 
 	label_data = nifti_util.nifti_2_numpy(label_volume)
 
 	try:
+                print '\n'
 		print 'Using python\'s nibabel package to crop out background voxels on ' + crop_volume + ' using background values from the label at ' + label_volume + '...'
 		
 		crop_data = nifti_util.nifti_2_numpy(crop_volume)
