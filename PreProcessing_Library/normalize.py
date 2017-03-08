@@ -2,6 +2,7 @@ from subprocess import call
 from qtim_tools.qtim_utilities import nifti_util
 
 import glob
+import os
 import numpy as np
 import nibabel as nib
 
