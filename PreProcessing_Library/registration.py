@@ -13,7 +13,6 @@ def BRAINSFit_register(moving_volume, output_filename, fixed_volume, fixed_volum
 
     if fixed_volume == '' and fixed_volume_search_phrase != '':
         fixed_volume_results = glob.glob(os.path.join(os.path.dirname(moving_volume), fixed_volume_search_phrase))
-        print os.path.join(os.path.dirname(moving_volume), fixed_volume_search_phrase)
         if len(fixed_volume_results) == 1:
             fixed_volume = fixed_volume_results[0]
         else:
