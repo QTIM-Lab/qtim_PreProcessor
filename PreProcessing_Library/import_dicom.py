@@ -20,12 +20,12 @@ def mri_convert(dicom_folder, output_filename):
         print '\n'
         print 'Using freesurfer\'s mri_convert to convert DICOM into nifti for folder... ' + dicom_folder
         
-        patient_id = check_output(' '.join(mri_probedicom_patient_id_command))
-        series_description = check_output(' '.join(mri_probedicom_series_description_command))
+        patient_id = check_output(mri_probedicom_patient_id_command)[0:-2]
+        series_description = check_output(mri_probedicom_series_description_command)[0:-2]
 
         output_directory = os.path.dirname(output_filename)
-        
-        mri_convert_specific_command = mri_convert_base_command + [dicom_volume, os.path.join(output_directory, patient_id + '_' + series_description)]
+
+        mri_convert_specific_command = mri_convert_base_command + [dicom_volume, os.path.join(output_directory, patient_id + '_' + series_description + 'nii.gz')]
 
         call(' '.join(mri_convert_specific_command), shell=True)
 

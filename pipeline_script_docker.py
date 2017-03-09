@@ -152,5 +152,5 @@ pipeline.execute('normalize', input_files, input_search_phrase, input_exclusion_
 
 # #--------------------------------------------------------------------#
 
-pipeline.move_files_recursive(input_filepaths='./INPUT_DATA/NORMALIZED_NIFTI', output_folder='/INPUT_DATA/PREPROCESSED_DATA')
+pipeline.move_files_recursive(input_filepaths='./INPUT_DATA/NORMALIZED_NIFTI', output_folder='./INPUT_DATA/PREPROCESSED_DATA')
 # pipeline.clear_directories(['./INPUT_DATA/BIAS_CORRECTED_NIFTI', './INPUT_DATA/ISOTROPIC_NIFTI', './INPUT_DATA/REGISTERED_NIFTI', './INPUT_DATA/SKULLSTRIP_NIFTI', './INPUT_DATA/NORMALIZED_NIFTI'])
