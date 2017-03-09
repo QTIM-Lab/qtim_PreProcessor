@@ -25,7 +25,7 @@ def mri_convert(dicom_folder, output_filename):
 
         output_directory = os.path.dirname(output_filename)
 
-        mri_convert_specific_command = mri_convert_base_command + [dicom_volume, os.path.join(output_directory, patient_id + '_' + series_description + 'nii.gz')]
+        mri_convert_specific_command = mri_convert_base_command + [dicom_volume, os.path.join(output_directory, patient_id + '_' + series_description + '.nii.gz')]
 
         call(' '.join(mri_convert_specific_command), shell=True)
 
