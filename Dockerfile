@@ -5,9 +5,9 @@ LABEL maintainer "Andrew Beers <andrew_beers@alumni.brown.edu>"
 WORKDIR /home
 
 # Install NeuroDebian
-RUN wget -O- http://neuro.debian.net/lists/jessie.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
-RUN apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 0xA5D32F012649A5A9 
-RUN apt-get update
+RUN wget -O- http://neuro.debian.net/lists/jessie.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list && \
+  apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 0xA5D32F012649A5A9 && \
+  apt-get update
 
 # Install FSL with NeuroDebian
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes fsl-5.0-complete
@@ -18,21 +18,21 @@ RUN SLICER_URL="http://download.slicer.org/bitstream/461634" && \
     mv /tmp/Slicer* /opt/slicer
 
 # Install FreeSurfer
-RUN bash
-RUN wget ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
-RUN tar -C /usr/local -xzvf freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
-RUN rm freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
+RUN bash && \
+  wget ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz && \
+  tar -C /usr/local -xzvf freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz && \
+  rm freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz
 
 # Install ANTS
 WORKDIR /home
-RUN wget "https://github.com/stnava/ANTs/releases/download/v2.1.0/Linux_Debian_jessie_x64.tar.bz2"
-RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes bzip2
-RUN tar -C /usr/local -xjf Linux_Debian_jessie_x64.tar.bz2
-RUN rm Linux_Debian_jessie_x64.tar.bz2
+RUN wget "https://github.com/stnava/ANTs/releases/download/v2.1.0/Linux_Debian_jessie_x64.tar.bz2" && \
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes bzip2 && \
+  tar -C /usr/local -xjf Linux_Debian_jessie_x64.tar.bz2 && \
+  rm Linux_Debian_jessie_x64.tar.bz2
 
 # Install required python packages.
-RUN sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-pip python2.7-dev
-RUN pip install qtim_tools nibabel pydicom
+RUN sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-pip python2.7-dev && \
+  pip install qtim_tools nibabel pydicom
 
 # Pull git repository with relevant python scripts.
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/qtim_PreProcessor
@@ -52,4 +52,5 @@ RUN echo "source $FREESURFER_HOME/SetUpFreeSurfer.sh" >> ~/.bashrc
 RUN echo "source ${FSLDIR}/etc/fslconf/fsl.sh" >> ~/.bashrc
 
 # Commands at startup.
-ENTRYPOINT /bin/bash
+# ENTRYPOINT /bin/bash
+CMD cd /home/data && python pipeline_script.py
