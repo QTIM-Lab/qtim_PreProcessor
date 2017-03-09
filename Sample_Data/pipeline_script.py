@@ -7,7 +7,7 @@ import qtim_PreProcessor.PreProcessing_Library.pipeline as pipeline
 
 #--------------------------------------------------------------------#
 # DICOM Conversion Step
-#Available methods: 'freesurfer_mri_convert'
+# Available methods: 'freesurfer_mri_convert'
 
 input_files = ['./INPUT_DATA/TCGA-02-0054']
 input_search_phrase = '*'
@@ -87,7 +87,7 @@ extra_parameters = [fixed_volume, fixed_volume_search_phrase, transform_type, tr
 
 pipeline.execute('register', input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, extra_parameters)
 
-# #--------------------------------------------------------------------#
+# # #--------------------------------------------------------------------#
 
 # #--------------------------------------------------------------------#
 # Skull-Stripping Step
@@ -155,5 +155,5 @@ pipeline.execute('normalize', input_files, input_search_phrase, input_exclusion_
 
 # #--------------------------------------------------------------------#
 
-pipeline.move_files_unique_folder(input_filepaths='./INPUT_DATA/NORMALIZED_NIFTI', output_base_directory='./INPUT_DATA', separator='_', prefix_segments=1)
-pipeline.clear_directories(['./INPUT_DATA/BIAS_CORRECTED_NIFTI', './INPUT_DATA/ISOTROPIC_NIFTI', './INPUT_DATA/REGISTERED_NIFTI', './INPUT_DATA/SKULLSTRIP_NIFTI', './INPUT_DATA/NORMALIZED_NIFTI'])
+# pipeline.move_files_unique_folder(input_filepaths='./INPUT_DATA/NORMALIZED_NIFTI', output_base_directory='./INPUT_DATA', separator='_', prefix_segments=1)
+# pipeline.clear_directories(['./INPUT_DATA/BIAS_CORRECTED_NIFTI', './INPUT_DATA/ISOTROPIC_NIFTI', './INPUT_DATA/REGISTERED_NIFTI', './INPUT_DATA/SKULLSTRIP_NIFTI', './INPUT_DATA/NORMALIZED_NIFTI'])

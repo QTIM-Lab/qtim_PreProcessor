@@ -114,11 +114,13 @@ def move_files_unique_folder(input_filepaths, output_base_directory, file_regex=
 
     for move_file in file_list:
 
-        output_folder = os.path.join(output_base_directory, separator.join(str.split(os.path.basename(os.path.normpath(move_file)), separator)[0:prefix_segments]))
-        
-        output_filepath = grab_output_filepath(move_file, output_folder, output_suffix, make_dir)
+        if not os.path.isdir(move_file):
 
-        os.rename(move_file, output_filepath)
+            output_folder = os.path.join(output_base_directory, separator.join(str.split(os.path.basename(os.path.normpath(move_file)), separator)[0:prefix_segments]))
+            
+            output_filepath = grab_output_filepath(move_file, output_folder, output_suffix, make_dir)
+
+            os.rename(move_file, output_filepath)
 
 def execute(preprocess_step, input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, params):
 

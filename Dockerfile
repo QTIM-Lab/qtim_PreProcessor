@@ -35,6 +35,7 @@ RUN sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-pi
   pip install qtim_tools nibabel pydicom
 
 # Pull git repository with relevant python scripts.
+RUN echo UPDATING_GIT
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/qtim_PreProcessor
 
 # Environmental Variables
@@ -53,4 +54,4 @@ RUN echo "source ${FSLDIR}/etc/fslconf/fsl.sh" >> ~/.bashrc
 
 # Commands at startup.
 # ENTRYPOINT /bin/bash
-CMD cd /home/data && python pipeline_script.py
+CMD /bin/bash -c "source /root/.bashrc && cd /home/data && python pipeline_script.py"
