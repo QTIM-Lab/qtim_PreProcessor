@@ -6,8 +6,8 @@ WORKDIR /home
 
 # Install NeuroDebian
 RUN wget -O- http://neuro.debian.net/lists/jessie.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
-RUN sudo apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 0xA5D32F012649A5A9 
-RUN sudo apt-get update
+RUN apt-key adv --recv-keys --keyserver hkp://pgp.mit.edu:80 0xA5D32F012649A5A9 
+RUN apt-get update
 
 # Install FSL with NeuroDebian
 RUN sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes fsl-5.0-complete

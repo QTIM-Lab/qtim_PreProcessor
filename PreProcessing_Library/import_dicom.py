@@ -3,7 +3,7 @@ import Scripts.Slicer_Import_Dicom
 import os
 import inspect
 
-from subprocess import call
+from subprocess import call, check_output
 
 
 def mri_convert(dicom_folder, output_filename):
@@ -13,12 +13,20 @@ def mri_convert(dicom_folder, output_filename):
 
     mri_convert_base_command = ['mri_convert']
 
-    mri_convert_specific_command = mri_convert_base_command + [dicom_volume, output_filename]
+    mri_probedicom_patient_id_command = ['mri_probedicom', '--i', dicom_volume, '--t', '10', '20']
+    mri_probedicom_series_description_command = ['mri_probedicom', '--i', dicom_volume, '--t', '08', '103e']
 
     try:
         print '\n'
         print 'Using freesurfer\'s mri_convert to convert DICOM into nifti for folder... ' + dicom_folder
         
+        patient_id = check_output(' '.join(mri_probedicom_patient_id_command))
+        series_description = check_output(' '.join(mri_probedicom_series_description_command))
+
+        output_directory = os.path.dirname(output_filename)
+        
+        mri_convert_specific_command = mri_convert_base_command + [dicom_volume, os.path.join(output_directory, patient_id + '_' + series_description)]
+
         call(' '.join(mri_convert_specific_command), shell=True)
 
     except:
