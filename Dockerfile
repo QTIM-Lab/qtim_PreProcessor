@@ -35,7 +35,7 @@ RUN sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-pi
 RUN pip install qtim_tools nibabel pydicom
 
 # Pull git repository with relevant python scripts.
-RUN echo PATH
+RUN echo math
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/qtim_PreProcessor
 
 # Environmental Variables
