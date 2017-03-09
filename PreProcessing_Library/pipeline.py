@@ -108,7 +108,16 @@ def move_files_recursive(input_filepaths, file_regex='*', exclusion_regex='', ou
 
         os.rename(move_file, output_filepath)
 
+def move_files_unique_folder(input_filepaths, output_base_directory, file_regex='*', exclusion_regex='', output_suffix='', separator='_', prefix_segments=1, make_dir = True):
+    file_list = grab_files(input_filepaths, file_regex, exclusion_regex)
 
+    for move_file in file_list:
+
+        output_folder = os.path.join(output_base_directory, separator.join(str.split(move_file, separator)[0:prefix_segments]))
+        
+        output_filepath = grab_output_filepath(move_file, output_folder, output_suffix, make_dir)
+
+        os.rename(move_file, output_filepath)
 
 def execute(preprocess_step, input_files, input_search_phrase, input_exclusion_phrase, output_folder, output_suffix, method, params):
 

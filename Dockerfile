@@ -35,7 +35,7 @@ RUN sudo DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes install python-pi
 RUN pip install qtim_tools nibabel pydicom
 
 # Pull git repository with relevant python scripts.
-RUN echo $PATH
+RUN ECHO PATH
 RUN git clone https://github.com/QTIM-Lab/qtim_PreProcessor /home/qtim_PreProcessor
 
 # Environmental Variables
@@ -44,6 +44,9 @@ ENV FREESURFER_HOME /usr/local/freesurfer
 ENV PATH "$PATH:/opt/slicer"
 ENV PATH "$PATH:${FSLDIR}/bin"
 ENV PATH "$PATH:/usr/local/debian_jessie"
+
+# FreeSurfer License
+RUN mv /home/qtim_PreProcessor/PreProcessing_Library/Scripts/FreeSurfer_Resources/license.txt /usr/local/freesurfer
 
 # Startup Scripts
 RUN echo "source $FREESURFER_HOME/SetUpFreeSurfer.sh" >> ~/.bashrc
