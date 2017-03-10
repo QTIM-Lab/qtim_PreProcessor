@@ -10,10 +10,10 @@ When run, the container will run its preprocessing pipeline with a user-provided
 A sample Docker command would look like:
 
 ```
-docker run -rm -v ~/Sample_Data:/home/data qtimlab/med-image-preprocessing
+docker run --rm -v ~/Sample_Data:/home/data qtimlab/med-image-preprocessing
 ```
 
-The "/home/data" portion on the right-hand side of the "-v" option should never change. Running this script will load your pipeline script and, provided you have configured the pipeline for your data, run pre-processing steps and output the data in a new folder. 
+The "/home/data" portion on the right-hand side of the "-v" option should never change. Make sure that the left-hand side of the "-v" option is an absolute, rather than relative, path. Running this script will load your pipeline script and, provided you have configured the pipeline for your data, run pre-processing steps and output the data in a new folder. 
 
 ## Sample "pipeline_script.py"
 
@@ -56,7 +56,7 @@ pipeline.execute('resample', input_files, input_search_phrase, input_exclusion_p
 ```
 
 ### Input
-Every pre-processing method has the same options for input. "input_files" can be either a list of files to process, a list of directories, or both. "input_search_phrase" is an optional regular expression to apply to the directories provided in "input_files". Above, it is set to '\*.nii\*' to only pick up nifti files. "input_exclusion_phrase" is another optional string. Files that includethe string provided to "input_exclusions_phrase" in their filename will not be chosen for pre-processing.
+Every pre-processing method has the same options for input. "input_files" can be either a list of files to process, a list of directories, or both. "input_search_phrase" is an optional regular expression to apply to the directories provided in "input_files". Above, it is set to '\*.nii\*' to only pick up nifti files. "input_exclusion_phrase" is another optional string. Files that includethe string provided to "input_exclusion_phrase" in their filename will not be chosen for pre-processing.
 
 ### Output
 Similarly, every method has the same options for output. "output_folder" is where the files should be outputted after a pre-processing step is finished. If the provided "output_folder" does not exist, one will be made. "output_suffix" is a label that will be applied at the end of a filepath after it has been pre-processed, in order to keep track of which steps have been performed on it. In this case, a file named "Example.nii.gz" would be labeled "Example_isotropic.nii.gz" after processing.
